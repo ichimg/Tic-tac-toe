@@ -106,8 +106,12 @@
     <QtRcc Include="QtFrameworkUI.qrc" />
     <QtUic Include="QtFrameworkUI.ui" />
     <QtMoc Include="QtFrameworkUI.h" />
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="QtFrameworkUI.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Board.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
