@@ -1,6 +1,7 @@
 #include <QtCore/QCoreApplication>
 #include "Board.h"
 #include "iostream"
+#include "QtFrameworkUI.h"
 
 int main(int argc, char* argv[])
 {
@@ -11,6 +12,8 @@ int main(int argc, char* argv[])
 	board.loadBoard();
 
 	board.show();
+	QtFrameworkUI w;
+	w.show();
 
 	/**
 	* Helper Functions
