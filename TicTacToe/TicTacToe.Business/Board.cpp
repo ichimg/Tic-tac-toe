@@ -17,3 +17,8 @@ bool Board::IsFull() const
             return false;
     return true;
 }
+
+void Board::EmplaceSymbol(int position, SymbolType symbol)
+{
+    m_boardView[position] = symbol;
+}

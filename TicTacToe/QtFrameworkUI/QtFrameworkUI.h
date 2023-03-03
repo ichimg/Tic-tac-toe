@@ -2,7 +2,6 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_QtFrameworkUI.h"
-#include <Test.h>
 
 class QtFrameworkUI : public QMainWindow
 {
@@ -17,5 +16,4 @@ private slots:
 
 private:
     Ui::QtFrameworkUIClass ui;
-    Test testObject;
 };

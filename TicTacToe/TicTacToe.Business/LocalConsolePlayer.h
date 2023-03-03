@@ -5,7 +5,8 @@ class LocalConsolePlayer : public IPlayer
 {
 public:
 	LocalConsolePlayer(std::string name, SymbolType symbol);
-	virtual Position PutSymbol() override;
+	virtual Position RequestPutSymbol() override;
+	virtual void PutSymbol(Board& board, const Position& position) override;
 
 private:
 	SymbolType m_symbol;

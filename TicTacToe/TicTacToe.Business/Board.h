@@ -14,6 +14,8 @@ public:
 	static const size_t SIZE = NO_OF_COLS * NO_OF_ROWS;
 	SymbolType at(int index) const;
 	bool IsFull() const;
+	void EmplaceSymbol(int position, SymbolType symbol);
+
 
 private:
 	std::array<SymbolType, SIZE> m_boardView; // i * SIZE + j

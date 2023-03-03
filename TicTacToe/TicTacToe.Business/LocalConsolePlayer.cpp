@@ -8,7 +8,7 @@ LocalConsolePlayer::LocalConsolePlayer(std::string name, SymbolType symbol)
 	m_name = name;
 	m_symbol = symbol;
 }
-Position LocalConsolePlayer::PutSymbol()
+Position LocalConsolePlayer::RequestPutSymbol()
 {
 	Position position;
 	std::cout << "<<<<<< " << m_name << std::endl;
@@ -19,8 +19,11 @@ Position LocalConsolePlayer::PutSymbol()
 	std::cin >> position.second;
 	std::cout << std::endl;
 
-	if (position.first > Board::SIZE - 1 || position.second > Board::SIZE - 1)
-		throw std::exception("Board index out of bound");
-
 	return position;
+}
+
+void LocalConsolePlayer::PutSymbol(Board& board, const Position& position)
+{
+	int positionInArray = position.first * Board::NO_OF_COLS + position.second;
+	board.EmplaceSymbol(positionInArray, m_symbol);
 }

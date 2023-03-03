@@ -5,7 +5,7 @@ QtFrameworkUI::QtFrameworkUI(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    ui.helloText->setText(QString::fromStdString(testObject.method()));
+    ui.helloText->setText(QString::fromStdString("hELLO"));
     setWindowTitle("Qt UI");
 }
 
