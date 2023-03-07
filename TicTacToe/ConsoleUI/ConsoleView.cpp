@@ -30,6 +30,12 @@ void ConsoleView::Execute()
 		}
 
 	} while (!m_gameMode->IsGameOver());
+
+	if (m_gameMode->IsGameOver() && !m_gameMode->IsWin())
+	{
+		DisplayBoard(m_gameMode->GetBoard());
+		std::cout << "WOW, it's a DRAW!" << std::endl;
+	}
 }
 
 void ConsoleView::DisplayWin(IPlayer* player)
