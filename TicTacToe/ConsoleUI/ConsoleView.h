@@ -7,11 +7,15 @@ class ConsoleView
 public:
 	ConsoleView();
 	void Execute();
+	void DisplayWin(IPlayer* player);
+	void DisplayBoard(const Board& board);
+	void PutSymbol();
 
 private:
-	Board m_board;
-	IPlayer* m_firstPlayer;
-	IPlayer* m_secondPlayer;
+	IPlayer* m_player;
 	IPlayGamePtr m_gameMode;
+
+private:
+	char SymbolToChar(const SymbolType& symbol);
 };
 

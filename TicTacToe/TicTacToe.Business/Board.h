@@ -15,6 +15,7 @@ public:
 	SymbolType at(int index) const;
 	bool IsFull() const;
 	void EmplaceSymbol(int position, SymbolType symbol);
+	void Display() const;
 
 
 private:

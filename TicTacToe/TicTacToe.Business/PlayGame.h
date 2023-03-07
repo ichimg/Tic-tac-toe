@@ -1,16 +1,18 @@
 #pragma once
 #include "IPlayGame.h"
+
 class PlayGame : public IPlayGame
 {
 public:
-	PlayGame(IPlayer* firstPlayer, IPlayer* secondPlayer);
-	bool virtual IsEmptyPosition(const Position& position, const Board& board) const override;
-	bool virtual IsWin(const Board& board) const override;
-	bool virtual IsGameOver(const Board& board) const;
+	PlayGame(IPlayer* player);
+	bool virtual IsEmptyPosition(const Position& position) const override;
+	bool virtual IsWin() const override;
+	bool virtual IsGameOver() const;
+	virtual void PutSymbol(SymbolType symbol);
+	virtual Board GetBoard() const;
 
 private:
-	
-	IPlayer* m_firstPlayer;
-	IPlayer* m_secondPlayer;
+	Board m_board;
+	IPlayer* m_player;
 };
 

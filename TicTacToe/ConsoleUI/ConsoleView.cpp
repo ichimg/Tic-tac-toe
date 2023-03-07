@@ -2,30 +2,65 @@
 #include <iostream>
 ConsoleView::ConsoleView()
 {
-	m_firstPlayer = new LocalConsolePlayer("Player1", SymbolType::X);
-	m_secondPlayer = new LocalConsolePlayer("Player2", SymbolType::O);
-	m_gameMode = IPlayGame::Produce(EGameType::type1, m_firstPlayer, m_secondPlayer); 
+	m_player = new LocalConsolePlayer(SymbolType::X);
+	m_gameMode = IPlayGame::Produce(EGameType::type1, m_player); 
 }
 
 void ConsoleView::Execute()
 {
 	do
 	{
-		Position firstPlayerChosenPosition = m_firstPlayer->RequestPutSymbol();
-		while (!m_gameMode->IsEmptyPosition(firstPlayerChosenPosition, m_board))
-		{
-			std::cout << "The selected position is not valid, please enter another one." << std::endl;
-			firstPlayerChosenPosition = m_firstPlayer->RequestPutSymbol();
-		}
-		m_firstPlayer->PutSymbol(m_board, firstPlayerChosenPosition);
-		
-		Position secondPlayerChosenPosition = m_secondPlayer->RequestPutSymbol();
-		while (!m_gameMode->IsEmptyPosition(secondPlayerChosenPosition, m_board))
-		{
-			std::cout << "The selected position is not empty, please enter another one." << std::endl;
-			secondPlayerChosenPosition = m_secondPlayer->RequestPutSymbol();
-		}
-		m_secondPlayer->PutSymbol(m_board, secondPlayerChosenPosition);
+		DisplayBoard(m_gameMode->GetBoard());
 
-	} while (m_gameMode->IsWin(m_board) || m_gameMode->IsGameOver(m_board)); // isWin is not implemented => throwing exception
+		try 
+		{
+			m_gameMode->PutSymbol(SymbolType::X);
+		}
+		catch (std::exception e)
+		{
+			std::cout << e.what() << std::endl;
+			continue;
+		}
+
+		if (m_gameMode->IsWin())
+		{
+			DisplayBoard(m_gameMode->GetBoard());
+			DisplayWin(m_player);
+			return;
+		}
+
+	} while (!m_gameMode->IsGameOver());
+}
+
+void ConsoleView::DisplayWin(IPlayer* player)
+{
+	std::cout << "Congratulations! Player " << SymbolToChar(player->GetSymbol())<< " has won!"<< std::endl;
+}
+
+void ConsoleView::DisplayBoard(const Board& board)
+{
+	board.Display();
+	std::cout << std::endl;
+}
+
+void ConsoleView::PutSymbol()
+{
+}
+
+char ConsoleView::SymbolToChar(const SymbolType& symbol)
+{
+	switch (symbol)
+	{
+	case SymbolType::X:
+		return 'X';
+		break;
+	case SymbolType::O:
+		return 'O';
+		break;
+	case SymbolType::Empty:
+		return '_';
+		break;
+	default:
+		break;
+	}
 }

@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <iostream>
 
 Board::Board()
 {
@@ -22,3 +23,24 @@ void Board::EmplaceSymbol(int position, SymbolType symbol)
 {
     m_boardView[position] = symbol;
 }
+
+void Board::Display() const
+{
+    int count = 0;
+    for (const auto& elem : m_boardView)
+    {
+        if (count < 3)
+        {
+            std::cout << SymbolToChar(elem) << ' ';
+            count++;
+        }
+        else
+        {
+            std::cout << std::endl << SymbolToChar(elem) << ' ';
+            count = 1;
+        }
+    }
+    std::cout << std::endl;
+}
+
+
