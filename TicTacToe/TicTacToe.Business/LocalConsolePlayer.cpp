@@ -41,3 +41,11 @@ void LocalConsolePlayer::ChangeSymbol()
 {
 	m_symbol == SymbolType::X ? m_symbol = SymbolType::O : m_symbol = SymbolType::X;
 }
+
+void LocalConsolePlayer::SetSymbol(const SymbolType& symbol)
+{
+}
+
+void LocalConsolePlayer::SetPosition(const Position& position)
+{
+}

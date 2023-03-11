@@ -12,6 +12,10 @@ public:
 	virtual std::string GetName() const = 0;
 	virtual SymbolType GetSymbol() const = 0;
 	virtual void ChangeSymbol() = 0;
+
+	virtual void SetSymbol(const SymbolType& symbol) = 0;
+	virtual void SetPosition(const Position& position) = 0;
+
 	virtual ~IPlayer() = default;
 
 private:

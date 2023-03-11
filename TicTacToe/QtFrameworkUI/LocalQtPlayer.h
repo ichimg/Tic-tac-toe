@@ -1,12 +1,16 @@
 #pragma once
 #include <string>
 #include "IPlayer.h"
-class LocalConsolePlayer : public IPlayer
+#include "ui_QtFrameworkUI.h"
+#include <QtWidgets>
+
+class LocalQtPlayer : public IPlayer, public QWidget
 {
 public:
-	LocalConsolePlayer(SymbolType symbol);
-	virtual Position RequestPutSymbol() override;
+	LocalQtPlayer(SymbolType symbol);
+	
 	virtual void PutSymbol(Board& board, const Position& position) override;
+	virtual Position RequestPutSymbol() override;
 	virtual std::string GetName() const override;
 	virtual SymbolType GetSymbol() const override;
 	virtual void ChangeSymbol();
@@ -16,5 +20,6 @@ public:
 
 private:
 	SymbolType m_symbol;
+	Position m_position;
 };
 

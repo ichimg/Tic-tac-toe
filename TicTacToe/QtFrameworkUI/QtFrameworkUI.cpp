@@ -1,21 +1,77 @@
 #include "QtFrameworkUI.h"
 #include <QMessageBox>
+#include "iostream"
 
 QtFrameworkUI::QtFrameworkUI(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
 {
-    ui.setupUi(this);
-    ui.helloText->setText(QString::fromStdString("hELLO"));
-    setWindowTitle("Qt UI");
+    m_player = new LocalQtPlayer(SymbolType::X);
+    m_gameMode = IPlayGame::Produce(EGameType::type1, m_player);
+}
+
+void QtFrameworkUI::DisplayWin(IPlayer* player)
+{
+	QMessageBox qm;
+	qm.setText("Congratulations! Player " + QString(SymbolToChar(player->GetSymbol()))
+		+ " has won!");
+	qm.exec();
+	close();
+}
+
+void QtFrameworkUI::DisplayMessage(const std::string& message) 
+{
+	QMessageBox qm;
+	qm.setText(QString::fromStdString(message));
+	qm.exec();
+	close();
+}
+
+void QtFrameworkUI::DisplayBoard()
+{
+	QGridLayout* gridLayout = new QGridLayout(this);
+
+	for (int row = 0; row < 3; ++row) {
+		for (int column = 0; column < 3; ++column) {
+			QPushButton* button = new QPushButton(this);
+			button->setFixedSize(100, 100);
+			button->setFont(QFont("Arial", 32));
+			gridLayout->addWidget(button, row, column);
+			connect(button, &QPushButton::clicked, this, &QtFrameworkUI::Execute);
+		}
+	}
+}
+
+void QtFrameworkUI::Execute() {
+	if (!m_gameMode->IsGameOver());
+	{
+		QPushButton* button = qobject_cast<QPushButton*>(sender());
+		if (button) {
+			button->setText(QString(SymbolToChar(m_player->GetSymbol())));
+			(m_player->GetSymbol() == SymbolType::X) ? button->setStyleSheet("color: #FF0000;") : button->setStyleSheet("color: #0000FF;");
+			button->setEnabled(false);
+
+			m_player->SetSymbol(m_player->GetSymbol());
+			QGridLayout* layout = qobject_cast<QGridLayout*>(button->parentWidget()->layout());
+			if (layout) {
+				Position position(layout->indexOf(button) / 3, layout->indexOf(button) % 3);
+				m_player->SetPosition(position);
+			}
+		}
+
+		m_gameMode->PutSymbol(m_player->GetSymbol());
+
+		if (m_gameMode->IsWin())
+		{
+			DisplayWin(m_player);
+			return;
+		}
+	}
+
+	if (m_gameMode->IsGameOver() && !m_gameMode->IsWin())
+	{
+		DisplayMessage("Wow! It's a draw.");
+	}
 }
 
 QtFrameworkUI::~QtFrameworkUI()
 {}
-
-void QtFrameworkUI::on_okButton_clicked()
-{
-    QMessageBox qm;
-    qm.setText("You just tickled me...");
-    qm.exec();
-    close();
-}

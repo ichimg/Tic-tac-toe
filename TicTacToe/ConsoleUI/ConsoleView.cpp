@@ -1,5 +1,6 @@
 #include "ConsoleView.h"
 #include <iostream>
+
 ConsoleView::ConsoleView()
 {
 	m_player = new LocalConsolePlayer(SymbolType::X);
