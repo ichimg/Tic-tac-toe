@@ -148,6 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="IGame.h" />
+    <ClInclude Include="IGameListener.h" />
     <ClInclude Include="IPlayer.h" />
     <ClInclude Include="IPlayGame.h" />
     <ClInclude Include="PlayGame.h" />
@@ -155,6 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="ConsoleListener.cpp" />
+    <ClCompile Include="ConsoleListener.h" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="PlayGame.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
