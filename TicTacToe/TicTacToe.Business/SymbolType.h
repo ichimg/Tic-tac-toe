@@ -7,6 +7,12 @@ enum class SymbolType : char
 	Empty
 };
 
+
+/// <summary>
+///     Converts SymbolType value that X or O to string.
+/// </summary>
+/// <param name="symbol">SymbolType value.</param>
+/// <returns></returns>
 static char SymbolToChar(const SymbolType& symbol)
 {
     switch (symbol)
