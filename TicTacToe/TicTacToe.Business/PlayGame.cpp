@@ -90,11 +90,50 @@ void PlayGame::PutSymbol(SymbolType symbol)
 
     m_player->PutSymbol(m_board, playerChosenPosition);
 
-    if(!IsWin())
+    if (!IsWin())
+    {
         m_player->ChangeSymbol();
+    }
+    else
+    {
+        for (const auto& listener : m_listeners)
+        {
+               listener->OnWin();
+        }
+    }
+
+    if (IsGameOver() && !IsWin())
+    {
+        for (const auto& listener : m_listeners)
+        {
+                listener->OnDraw();
+        }
+    }
+
 }
 
 Board PlayGame::GetBoard() const
 {
     return m_board;
+}
+
+void PlayGame::AddListener(IGameListener* listener)
+{
+    m_listeners.emplace_back(listener);
+}
+
+void PlayGame::RemoveListener(IGameListener* listener)
+{
+    for (auto it = m_listeners.begin(); it != m_listeners.end(); )
+    {
+            if (*it == listener)
+                it = m_listeners.erase(it);
+            else
+                ++it;
+    }
+}
+
+PlayGame::~PlayGame()
+{
+
 }

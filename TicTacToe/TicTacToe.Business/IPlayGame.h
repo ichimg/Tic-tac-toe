@@ -1,5 +1,6 @@
 #pragma once
 #include "IPlayer.h"
+#include "IGameListener.h"
 #include <memory>
 
 enum class EGameType
@@ -50,6 +51,10 @@ public:
 	/// </summary>
 	/// <param name="symbol">SymbolType value that stores X or O.</param>
 	virtual void PutSymbol(SymbolType symbol) = 0;
+
+	virtual void AddListener(IGameListener* listener) = 0;
+	virtual void RemoveListener(IGameListener* listener) = 0;
+
 	virtual ~IPlayGame() = default;
 };
 

@@ -5,6 +5,7 @@ ConsoleView::ConsoleView()
 {
 	m_player = new LocalConsolePlayer(SymbolType::X);
 	m_gameMode = IPlayGame::Produce(EGameType::type1, m_player); 
+	m_gameMode->AddListener(this);
 }
 
 void ConsoleView::Execute()
@@ -23,20 +24,7 @@ void ConsoleView::Execute()
 			continue;
 		}
 
-		if (m_gameMode->IsWin())
-		{
-			DisplayBoard(m_gameMode->GetBoard());
-			DisplayWin(m_player);
-			return;
-		}
-
 	} while (!m_gameMode->IsGameOver());
-
-	if (m_gameMode->IsGameOver() && !m_gameMode->IsWin())
-	{
-		DisplayBoard(m_gameMode->GetBoard());
-		std::cout << "WOW, it's a DRAW!" << std::endl;
-	}
 }
 
 void ConsoleView::DisplayWin(IPlayer* player)
@@ -50,8 +38,18 @@ void ConsoleView::DisplayBoard(const Board& board)
 	std::cout << std::endl;
 }
 
-void ConsoleView::PutSymbol()
+void ConsoleView::OnWin()
 {
+	DisplayBoard(m_gameMode->GetBoard());
+	DisplayWin(m_player);
+	exit(0);
+}
+
+void ConsoleView::OnDraw()
+{
+	DisplayBoard(m_gameMode->GetBoard());
+	std::cout << "WOW, it's a DRAW!" << std::endl;
+	exit(0);
 }
 
 char ConsoleView::SymbolToChar(const SymbolType& symbol)
