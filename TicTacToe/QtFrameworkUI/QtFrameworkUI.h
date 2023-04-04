@@ -6,7 +6,7 @@
 #include <IPlayer.h>
 #include "LocalQtPlayer.h"
 
-class QtFrameworkUI : public QWidget
+class QtFrameworkUI : public QWidget, public IGameListener
 {
     Q_OBJECT
 
@@ -17,6 +17,9 @@ public:
 	void DisplayBoard();
     ~QtFrameworkUI();
 
+	virtual void OnWin() override;
+	virtual void OnDraw() override;
+
 private slots:
 	void Execute();
 
@@ -26,5 +29,6 @@ private:
 private:
 	IPlayer* m_player;
 	IPlayGamePtr m_gameMode;
+
 };
 

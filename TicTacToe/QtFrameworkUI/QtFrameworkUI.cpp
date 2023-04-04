@@ -7,6 +7,7 @@ QtFrameworkUI::QtFrameworkUI(QWidget *parent)
 {
     m_player = new LocalQtPlayer(SymbolType::X);
     m_gameMode = IPlayGame::Produce(EGameType::type1, m_player);
+	m_gameMode->AddListener(this);
 }
 
 void QtFrameworkUI::DisplayWin(IPlayer* player)
@@ -59,19 +60,21 @@ void QtFrameworkUI::Execute() {
 		}
 
 		m_gameMode->PutSymbol(m_player->GetSymbol());
-
-		if (m_gameMode->IsWin())
-		{
-			DisplayWin(m_player);
-			return;
-		}
 	}
 
-	if (m_gameMode->IsGameOver() && !m_gameMode->IsWin())
-	{
-		DisplayMessage("Wow! It's a draw.");
-	}
 }
 
 QtFrameworkUI::~QtFrameworkUI()
 {}
+
+void QtFrameworkUI::OnWin()
+{
+	DisplayWin(m_player);
+	exit(0);
+}
+
+void QtFrameworkUI::OnDraw()
+{
+	DisplayMessage("Wow! It's a draw.");
+	exit(0);
+}

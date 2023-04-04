@@ -52,7 +52,16 @@ public:
 	/// <param name="symbol">SymbolType value that stores X or O.</param>
 	virtual void PutSymbol(SymbolType symbol) = 0;
 
+	/// <summary>
+	///		Add a listener.
+	/// </summary>
+	/// <param name="listener">IGameListener* that represents a listener. </param>
 	virtual void AddListener(IGameListener* listener) = 0;
+
+	/// <summary>
+	///		Remove a listener.
+	/// </summary>
+	/// <param name="listener">IGameListener* that represents a listener. </param>
 	virtual void RemoveListener(IGameListener* listener) = 0;
 
 	virtual ~IPlayGame() = default;
