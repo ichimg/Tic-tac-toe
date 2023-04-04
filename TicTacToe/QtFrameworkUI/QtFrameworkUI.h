@@ -1,10 +1,9 @@
 #pragma once
 
-#include <QtWidgets/QMainWindow>
+#include <QtWidgets>
 #include "ui_QtFrameworkUI.h"
 #include <IPlayGame.h>
 #include <IPlayer.h>
-#include "LocalQtPlayer.h"
 
 class QtFrameworkUI : public QWidget, public IGameListener
 {
@@ -28,8 +27,6 @@ private:
     Ui::QtFrameworkUIClass ui;
 
 private:
-	IPlayer* m_player;
 	IPlayGamePtr m_gameMode;
-
 };
 

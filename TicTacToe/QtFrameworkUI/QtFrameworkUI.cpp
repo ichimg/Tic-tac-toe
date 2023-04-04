@@ -5,7 +5,6 @@
 QtFrameworkUI::QtFrameworkUI(QWidget *parent)
     : QWidget(parent)
 {
-    m_player = new LocalQtPlayer(SymbolType::X);
     m_gameMode = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 	m_gameMode->AddListener(this);
 }
@@ -45,24 +44,15 @@ void QtFrameworkUI::DisplayBoard()
 void QtFrameworkUI::Execute() {
 	if (!m_gameMode->IsGameOver());
 	{
-		QPushButton* button = qobject_cast<QPushButton*>(sender());
-		if (button) {
-			button->setText(QString(SymbolToChar(m_player->GetSymbol())));
-			(m_player->GetSymbol() == SymbolType::X) ? button->setStyleSheet("color: #FF0000;") : button->setStyleSheet("color: #0000FF;");
-			button->setEnabled(false);
-
-			m_player->SetSymbol(m_player->GetSymbol());
-			QGridLayout* layout = qobject_cast<QGridLayout*>(button->parentWidget()->layout());
-			if (layout) {
-				Position position(layout->indexOf(button) / 3, layout->indexOf(button) % 3);
-				m_player->SetPosition(position);
-			}
+		try
+		{
+			m_gameMode->PutSymbol(SymbolType::X);
 		}
-
-		m_gameMode->PutSymbol(m_player->GetSymbol());
-		m_player->ChangeSymbol();
+		catch (std::exception e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
-
 }
 
 QtFrameworkUI::~QtFrameworkUI()
@@ -70,7 +60,7 @@ QtFrameworkUI::~QtFrameworkUI()
 
 void QtFrameworkUI::OnWin()
 {
-	DisplayWin(m_player);
+	DisplayWin(m_gameMode->GetPlayer());
 	exit(0);
 }
 
@@ -82,5 +72,19 @@ void QtFrameworkUI::OnDraw()
 
 Position QtFrameworkUI::OnMove()
 {
-	return m_player->GetPosition();
+	QPushButton* button = qobject_cast<QPushButton*>(sender());
+	Position position;
+	if (button) {
+		button->setText(QString(SymbolToChar(m_gameMode->GetPlayer()->GetSymbol())));
+		(m_gameMode->GetPlayer()->GetSymbol() == SymbolType::X) ? button->setStyleSheet("color: #FF0000;") : button->setStyleSheet("color: #0000FF;");
+		button->setEnabled(false);
+
+		m_gameMode->GetPlayer()->SetSymbol(m_gameMode->GetPlayer()->GetSymbol());
+		QGridLayout* layout = qobject_cast<QGridLayout*>(button->parentWidget()->layout());
+		if (layout) {
+			position = std::make_pair(layout->indexOf(button) / 3, layout->indexOf(button) % 3);
+			m_gameMode->GetPlayer()->SetPosition(position);
+		}
+	}
+	return position;
 }
