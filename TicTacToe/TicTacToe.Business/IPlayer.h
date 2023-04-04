@@ -11,18 +11,6 @@ public:
 	/// </summary>
 	using Position = std::pair<int, int>;
 
-	/// <summary>
-	///		Returns position of current symbol.
-	/// </summary>
-	/// <returns>Position of current symbol.</returns>
-	virtual Position RequestPutSymbol() = 0;
-
-	/// <summary>
-	///		Places symbol on board at position(x, y).
-	/// </summary>
-	/// <param name="board">Board Class that stores current board.</param>
-	/// <param name="position">Position of where you want to put symbol.</param>
-	virtual void PutSymbol(Board& board, const Position& position) = 0;
 
 	/// <summary>
 	///		Returns name of current player.
@@ -35,6 +23,8 @@ public:
 	/// </summary>
 	/// <returns>Current symbol of player.</returns>
 	virtual SymbolType GetSymbol() const = 0;
+
+	virtual Position GetPosition() const = 0;
 
 	/// <summary>
 	///		Changes symbol from X to 0 or from O to X.

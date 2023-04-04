@@ -1,16 +1,17 @@
 #include "PlayGame.h"
+#include "Player.h"
 
-IPlayGamePtr IPlayGame::Produce(EGameType type, IPlayer* player)
+IPlayGamePtr IPlayGame::Produce(EGameType type, SymbolType symbol)
 {
     if (type == EGameType::type1)
-        return std::make_shared<PlayGame>(player);
+        return std::make_shared<PlayGame>(SymbolType::X);
     
     throw std::exception("Unknow game type.");
 }
 
-PlayGame::PlayGame(IPlayer* player)
+PlayGame::PlayGame(SymbolType symbol)
 {
-    m_player = player;
+    m_player = new Player(symbol);
 }
 
 bool PlayGame::IsEmptyPosition(const Position& position) const
@@ -83,12 +84,17 @@ bool PlayGame::IsGameOver() const
 
 void PlayGame::PutSymbol(SymbolType symbol)
 {
-    Position playerChosenPosition = m_player->RequestPutSymbol();
+    Position playerChosenPosition;
+    for (const auto& listener : m_listeners)
+    {
+        playerChosenPosition = listener->OnMove();
+    }
 
     if (!IsEmptyPosition(playerChosenPosition))
         throw std::exception("The selected position is not valid, please enter another one.");
 
-    m_player->PutSymbol(m_board, playerChosenPosition);
+    int positionInArray = playerChosenPosition.first * Board::NO_OF_COLS + playerChosenPosition.second;
+    m_board.EmplaceSymbol(positionInArray, m_player->GetSymbol());
 
     if (!IsWin())
     {
@@ -115,6 +121,11 @@ void PlayGame::PutSymbol(SymbolType symbol)
 Board PlayGame::GetBoard() const
 {
     return m_board;
+}
+
+IPlayer* PlayGame::GetPlayer()
+{
+    return m_player;
 }
 
 void PlayGame::AddListener(IGameListener* listener)

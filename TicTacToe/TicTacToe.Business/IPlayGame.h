@@ -19,7 +19,7 @@ public:
 	/// <param name="type">Type of game.</param>
 	/// <param name="player"></param>
 	/// <returns></returns>
-	static IPlayGamePtr Produce(EGameType type, IPlayer* player);
+	static IPlayGamePtr Produce(EGameType type, SymbolType symbol);
 
 	/// <summary>
 	///		Checks if position is empty.
@@ -46,11 +46,17 @@ public:
 	/// <returns></returns>
 	virtual Board GetBoard() const = 0;
 
+
+
 	/// <summary>
-	///		Puts symbol on board.
+	///		Places symbol on board at position(x, y).
 	/// </summary>
-	/// <param name="symbol">SymbolType value that stores X or O.</param>
+	/// <param name="board">Board Class that stores current board.</param>
+	/// <param name="position">Position of where you want to put symbol.</param>
 	virtual void PutSymbol(SymbolType symbol) = 0;
+
+
+	virtual IPlayer* GetPlayer() = 0;
 
 	/// <summary>
 	///		Add a listener.

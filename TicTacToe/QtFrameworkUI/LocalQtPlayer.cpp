@@ -37,6 +37,11 @@ void LocalQtPlayer::ChangeSymbol()
 	m_symbol == SymbolType::X ? m_symbol = SymbolType::O : m_symbol = SymbolType::X;
 }
 
+Position LocalQtPlayer::GetPosition() const
+{
+	return m_position;
+}
+
 Position LocalQtPlayer:: RequestPutSymbol() {
 	return m_position;
 }

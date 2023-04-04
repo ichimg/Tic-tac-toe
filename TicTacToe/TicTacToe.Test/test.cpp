@@ -47,7 +47,7 @@ TEST(BoardTest, HavingBoard_WhenCreated_ThenBoardIsEmpty)
 TEST(PlayGameTest, HavingPlayGameOnGoing_WhenIsWin_ThenReturnsFalse)
 {
 	IPlayer* player = new MockPlayer();
-	IPlayGamePtr playGame = IPlayGame::Produce(EGameType::type1, player);
+	IPlayGamePtr playGame = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 
 	EXPECT_EQ(playGame->IsWin(), false);
 }
@@ -55,7 +55,7 @@ TEST(PlayGameTest, HavingPlayGameOnGoing_WhenIsWin_ThenReturnsFalse)
 TEST(PlayGameTest, HavingPlayGame_WhenPutSymbol_ThenPlayerPutSymbol)
 {
 	MockPlayer mockPlayer;
-	IPlayGamePtr playGame = IPlayGame::Produce(EGameType::type1, &mockPlayer);
+	IPlayGamePtr playGame = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 
 	EXPECT_CALL(mockPlayer, PutSymbol);
 	playGame->PutSymbol(SymbolType::X);

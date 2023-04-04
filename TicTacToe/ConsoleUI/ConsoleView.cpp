@@ -3,8 +3,7 @@
 
 ConsoleView::ConsoleView()
 {
-	m_player = new LocalConsolePlayer(SymbolType::X);
-	m_gameMode = IPlayGame::Produce(EGameType::type1, m_player); 
+	m_gameMode = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 	m_gameMode->AddListener(this);
 }
 
@@ -41,7 +40,7 @@ void ConsoleView::DisplayBoard(const Board& board)
 void ConsoleView::OnWin()
 {
 	DisplayBoard(m_gameMode->GetBoard());
-	DisplayWin(m_player);
+	DisplayWin(m_gameMode->GetPlayer());
 	exit(0);
 }
 
@@ -50,6 +49,20 @@ void ConsoleView::OnDraw()
 	DisplayBoard(m_gameMode->GetBoard());
 	std::cout << "WOW, it's a DRAW!" << std::endl;
 	exit(0);
+}
+
+Position ConsoleView::OnMove()
+{
+	Position position;
+	std::cout << "<<<<<< Player " << SymbolToChar(m_gameMode->GetPlayer()->GetSymbol()) << std::endl;
+	std::cout << "Enter the row you want to place your symbol ";
+	std::cin >> position.first;
+
+	std::cout << "Enter the column you want to place your symbol ";
+	std::cin >> position.second;
+	std::cout << std::endl;
+
+	return position;
 }
 
 char ConsoleView::SymbolToChar(const SymbolType& symbol)

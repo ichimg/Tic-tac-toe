@@ -9,11 +9,12 @@ class LocalQtPlayer : public IPlayer, public QWidget
 public:
 	LocalQtPlayer(SymbolType symbol);
 	
-	virtual void PutSymbol(Board& board, const Position& position) override;
-	virtual Position RequestPutSymbol() override;
+	virtual void PutSymbol(Board& board, const Position& position);
+	virtual Position RequestPutSymbol();
 	virtual std::string GetName() const override;
 	virtual SymbolType GetSymbol() const override;
 	virtual void ChangeSymbol();
+	virtual Position GetPosition() const override;
 
 	virtual void SetSymbol(const SymbolType& symbol) override;
 	virtual void SetPosition(const Position& position) override;

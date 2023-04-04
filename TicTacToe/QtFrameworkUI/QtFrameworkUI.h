@@ -19,6 +19,7 @@ public:
 
 	virtual void OnWin() override;
 	virtual void OnDraw() override;
+	virtual Position OnMove() override;
 
 private slots:
 	void Execute();

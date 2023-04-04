@@ -6,7 +6,7 @@ QtFrameworkUI::QtFrameworkUI(QWidget *parent)
     : QWidget(parent)
 {
     m_player = new LocalQtPlayer(SymbolType::X);
-    m_gameMode = IPlayGame::Produce(EGameType::type1, m_player);
+    m_gameMode = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 	m_gameMode->AddListener(this);
 }
 
@@ -60,6 +60,7 @@ void QtFrameworkUI::Execute() {
 		}
 
 		m_gameMode->PutSymbol(m_player->GetSymbol());
+		m_player->ChangeSymbol();
 	}
 
 }
@@ -77,4 +78,9 @@ void QtFrameworkUI::OnDraw()
 {
 	DisplayMessage("Wow! It's a draw.");
 	exit(0);
+}
+
+Position QtFrameworkUI::OnMove()
+{
+	return m_player->GetPosition();
 }

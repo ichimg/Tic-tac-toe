@@ -1,8 +1,6 @@
 #pragma once
-#include <LocalConsolePlayer.h>
 #include <Board.h>
 #include <IPlayGame.h>
-#include <IGameListener.h>
 class ConsoleView : public IGameListener
 {
 public:
@@ -10,13 +8,12 @@ public:
 	void Execute();
 	void DisplayWin(IPlayer* player);
 	void DisplayBoard(const Board& board);
-	void PutSymbol();
 
 	void OnWin() override;
 	void OnDraw() override;
+	Position OnMove() override;
 
 private:
-	IPlayer* m_player;
 	IPlayGamePtr m_gameMode;
 
 private:

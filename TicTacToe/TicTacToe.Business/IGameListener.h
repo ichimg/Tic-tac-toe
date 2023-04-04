@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+using Position = std::pair<int, int>;
 class IGameListener
 {
 
@@ -14,6 +15,11 @@ public:
 	///		Display draw message.
 	/// </summary>
 	virtual void OnDraw() = 0;
+
+	/// <summary>
+	///		Take action on making a move.
+	/// </summary>
+	virtual Position OnMove() = 0;
 };
 
 
