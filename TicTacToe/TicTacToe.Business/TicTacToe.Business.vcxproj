@@ -147,10 +147,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Test.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="IGameListener.h" />
+    <ClInclude Include="IPlayer.h" />
+    <ClInclude Include="IPlayGame.h" />
+    <ClInclude Include="PlayGame.h" />
+    <ClInclude Include="SymbolType.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="PlayGame.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

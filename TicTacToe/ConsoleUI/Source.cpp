@@ -1,6 +1,16 @@
-#include <Test.h>
+#include "ConsoleView.h"
+#include "LocalConsolePlayer.h"
+#include <iostream>
 int main() {
-	Test t;
-	std::cout << t.method() << std::endl;
+
+	ConsoleView cv;
+	try
+	{
+		cv.Execute();
+	}
+	catch (std::exception ex)
+	{
+		std::cout << ex.what();
+	}
 	return 0;
 }

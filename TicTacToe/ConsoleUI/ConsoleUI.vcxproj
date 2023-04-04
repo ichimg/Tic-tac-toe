@@ -19,7 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\TicTacToe.Business\LocalConsolePlayer.cpp" />
+    <ClCompile Include="ConsoleView.cpp" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\TicTacToe.Business\LocalConsolePlayer.h" />
+    <ClInclude Include="ConsoleView.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
