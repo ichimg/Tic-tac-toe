@@ -24,8 +24,6 @@ public:
 	/// <returns>Current symbol of player.</returns>
 	virtual SymbolType GetSymbol() const = 0;
 
-	virtual Position GetPosition() const = 0;
-
 	/// <summary>
 	///		Changes symbol from X to 0 or from O to X.
 	/// </summary>
@@ -36,12 +34,6 @@ public:
 	/// </summary>
 	/// <param name="symbol">SymbolType that stores X or O.</param>
 	virtual void SetSymbol(const SymbolType& symbol) = 0;
-
-	/// <summary>
-	///		Setter for Position.
-	/// </summary>
-	/// <param name="position"></param>
-	virtual void SetPosition(const Position& position) = 0;
 
 	/// <summary>
 	///		Virtual destructor for Player Class.

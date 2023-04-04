@@ -23,12 +23,3 @@ void Player::SetSymbol(const SymbolType& symbol)
 {
     m_symbol = symbol;
 }
-
-void Player::SetPosition(const Position& position)
-{
-}
-
-Position Player::GetPosition() const
-{
-    throw std::exception("Not implemented exception");
-}

@@ -9,8 +9,6 @@ public:
 	virtual SymbolType GetSymbol() const override;
 	virtual void ChangeSymbol() override;
 	virtual void SetSymbol(const SymbolType& symbol) override;
-	virtual void SetPosition(const Position& position) override;
-	virtual Position GetPosition() const override;
 
 private:
 	std::string m_name;

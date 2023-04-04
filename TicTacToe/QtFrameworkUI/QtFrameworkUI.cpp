@@ -83,7 +83,6 @@ Position QtFrameworkUI::OnMove()
 		QGridLayout* layout = qobject_cast<QGridLayout*>(button->parentWidget()->layout());
 		if (layout) {
 			position = std::make_pair(layout->indexOf(button) / 3, layout->indexOf(button) % 3);
-			m_gameMode->GetPlayer()->SetPosition(position);
 		}
 	}
 	return position;
