@@ -72,18 +72,24 @@ void QtFrameworkUI::OnDraw()
 
 Position QtFrameworkUI::OnMove()
 {
-	QPushButton* button = qobject_cast<QPushButton*>(sender());
 	Position position;
-	if (button) {
+	try
+	{
+		QPushButton* button = qobject_cast<QPushButton*>(sender());
 		button->setText(QString(SymbolToChar(m_gameMode->GetPlayer()->GetSymbol())));
-		(m_gameMode->GetPlayer()->GetSymbol() == SymbolType::X) ? button->setStyleSheet("color: #FF0000;") : button->setStyleSheet("color: #0000FF;");
 		button->setEnabled(false);
+		(m_gameMode->GetPlayer()->GetSymbol() == SymbolType::X) ? 
+			button->setStyleSheet("color: #FF0000;") : 
+			button->setStyleSheet("color: #0000FF;");
 
-		m_gameMode->GetPlayer()->SetSymbol(m_gameMode->GetPlayer()->GetSymbol());
 		QGridLayout* layout = qobject_cast<QGridLayout*>(button->parentWidget()->layout());
 		if (layout) {
 			position = std::make_pair(layout->indexOf(button) / 3, layout->indexOf(button) % 3);
 		}
+	}
+	catch (std::exception e)
+	{
+		std::cout << e.what() << std::endl;
 	}
 	return position;
 }
