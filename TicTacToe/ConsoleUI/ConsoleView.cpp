@@ -7,8 +7,26 @@ ConsoleView::ConsoleView()
 	m_gameMode->AddListener(this);
 }
 
+void ConsoleView::SetConsoleStrategy() {
+	int input;
+	std::cout << "<<<<<< Game Mode:\n1 - PvP\n2 - Easy AI\n3 - Hard AI\n";
+	std::cout << "Enter desired game mode: ";
+	std::cin >> input;
+	switch (input) {
+		case 1:
+			break;
+		case 2:
+			m_gameMode->SetStrategy(EStrategyType::AIEasy);
+		case 3:
+			m_gameMode->SetStrategy(EStrategyType::AIHard);
+		default:
+			break;
+	}
+}
+
 void ConsoleView::Execute()
 {
+	SetConsoleStrategy();
 	do
 	{
 		DisplayBoard(m_gameMode->GetBoard());

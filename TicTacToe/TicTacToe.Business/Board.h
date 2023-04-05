@@ -37,6 +37,8 @@ public:
 	/// </summary>
 	void Display() const;
 
+	bool IsWin() const;
+
 
 private:
 	std::array<SymbolType, SIZE> m_boardView; // i * SIZE + j

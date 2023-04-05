@@ -1,6 +1,9 @@
 #pragma once
 #include "IPlayer.h"
 #include "IGameListener.h"
+#include "IStrategy.h"
+#include "AIEasy.h"
+#include "AIHard.h"
 #include <memory>
 
 enum class EGameType
@@ -9,6 +12,7 @@ enum class EGameType
 };
 
 using IPlayGamePtr = std::shared_ptr<class IPlayGame>;
+using IStrategyPtr = std::shared_ptr<class IStrategy>;
 using Position = std::pair<int, int>;
 class IPlayGame
 {
@@ -20,6 +24,10 @@ public:
 	/// <param name="player"></param>
 	/// <returns></returns>
 	static IPlayGamePtr Produce(EGameType type, SymbolType symbol);
+
+	virtual void SetStrategy(EStrategyType type) = 0;
+
+	virtual EStrategyType GetStrategyType() const = 0;
 
 	/// <summary>
 	///		Checks if position is empty.
@@ -45,8 +53,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual Board GetBoard() const = 0;
-
-
 
 	/// <summary>
 	///		Places symbol on board at position(x, y).
