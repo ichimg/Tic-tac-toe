@@ -10,23 +10,30 @@ class QtFrameworkUI : public QWidget, public IGameListener
     Q_OBJECT
 
 public:
-    QtFrameworkUI(QWidget *parent = nullptr);
+    QtFrameworkUI(QMainWindow* mainWindow, QWidget *parent = nullptr);
 	void DisplayWin(IPlayer* player);
 	void DisplayMessage(const std::string& message);
-	void DisplayBoard();
+	void DisplayMenu(QMainWindow* mainWindow);
+	void InitBoard();
+	void RefreshBoard();
     ~QtFrameworkUI();
 
 	virtual void OnWin() override;
 	virtual void OnDraw() override;
 	virtual Position OnMove() override;
 
+	std::string SymbolToString(const SymbolType& symbol);
+
 private slots:
 	void Execute();
+	void SetEasyAI();
+	void SetHardAI();
 
 private:
-    Ui::QtFrameworkUIClass ui;
+	QGridLayout* gridLayout;
 
 private:
 	IPlayGamePtr m_gameMode;
+	SymbolType m_symbol;
 };
 

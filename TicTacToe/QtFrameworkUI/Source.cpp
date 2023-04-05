@@ -5,17 +5,19 @@
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
+	QMainWindow mainWindow;
+	QtFrameworkUI qt(&mainWindow);
 
-	QtFrameworkUI qt;
 	try
 	{
-		qt.DisplayBoard();
+		qt.InitBoard();
 	}
 	catch (std::exception ex)
 	{
 		std::cout << ex.what();
 	}
-	qt.show();
 
+	mainWindow.setCentralWidget(&qt);
+	mainWindow.show();
 	return a.exec();
 }

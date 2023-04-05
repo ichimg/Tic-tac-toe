@@ -25,6 +25,7 @@ void PlayGame::SetStrategy(EStrategyType type)
 		m_strategy = std::make_shared<AIHard>();
 		break;
 	default:
+		m_strategy = nullptr;
 		break;
 	}
 }
