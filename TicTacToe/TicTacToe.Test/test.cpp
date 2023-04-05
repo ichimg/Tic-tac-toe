@@ -7,13 +7,10 @@
 class MockPlayer : public IPlayer
 {
 public: 
-	MOCK_METHOD(Position, RequestPutSymbol, (), (override));
-	MOCK_METHOD(void, PutSymbol, (Board& board, const Position& position), (override));
 	MOCK_METHOD(std::string, GetName, (), (const override));
 	MOCK_METHOD(SymbolType, GetSymbol, (), (const override));
 	MOCK_METHOD(void, ChangeSymbol, (), (override));
 	MOCK_METHOD(void, SetSymbol, (const SymbolType& symbol), (override));
-	MOCK_METHOD(void, SetPosition, (const Position& position), (override));
 };
 TEST(BoardTest, HavingBoardEmpty_WhenIsFull_ThenReturnFalse) 
 {
@@ -50,15 +47,6 @@ TEST(PlayGameTest, HavingPlayGameOnGoing_WhenIsWin_ThenReturnsFalse)
 	IPlayGamePtr playGame = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 
 	EXPECT_EQ(playGame->IsWin(), false);
-}
-
-TEST(PlayGameTest, HavingPlayGame_WhenPutSymbol_ThenPlayerPutSymbol)
-{
-	MockPlayer mockPlayer;
-	IPlayGamePtr playGame = IPlayGame::Produce(EGameType::type1, SymbolType::X);
-
-	EXPECT_CALL(mockPlayer, PutSymbol);
-	playGame->PutSymbol(SymbolType::X);
 }
 
 

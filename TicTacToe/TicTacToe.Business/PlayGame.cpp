@@ -64,16 +64,13 @@ bool PlayGame::IsGameOver() const
 void PlayGame::PutSymbol(SymbolType symbol)
 {
 	Position playerChosenPosition;
-	if (m_strategy != 0 && m_player->GetSymbol() == SymbolType::O) {
-		switch (m_strategy->GetStrategyType())
-		{
-		case EStrategyType::AIEasy:
-			playerChosenPosition = m_strategy->GenerateMove(m_board);
-		case EStrategyType::AIHard:
-			playerChosenPosition = m_strategy->GenerateMove(m_board);
-		}
+	if (m_strategy != 0 && m_player->GetSymbol() == SymbolType::O) 
+	{
+		playerChosenPosition = m_strategy->GenerateMove(m_board);
 	}
-	else {
+
+	else 
+	{
 		for (const auto& listener : m_listeners)
 		{
 			playerChosenPosition = listener->OnMove();
