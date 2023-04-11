@@ -82,31 +82,41 @@ void QtFrameworkUI::RefreshBoard(){
 	}
 }
 
-void QtFrameworkUI::Execute() {
+Position QtFrameworkUI::SelectPosition()
+{
+	Position position;
+	try
+	{
+		QPushButton* button = qobject_cast<QPushButton*>(sender());
+		button->setText(QString(SymbolToChar(m_gameMode->GetPlayer()->GetSymbol())));
+		(m_gameMode->GetPlayer()->GetSymbol() == SymbolType::X) ?
+			button->setStyleSheet("color: #FF0000;") :
+			button->setStyleSheet("color: #0000FF;");
+		button->setEnabled(false);
+
+		position = std::make_pair(gridLayout->indexOf(button) / 3, gridLayout->indexOf(button) % 3);
+	}
+	catch (std::exception e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	return position;
+}
+
+void QtFrameworkUI::Execute() 
+{
 	if (!m_gameMode->IsGameOver());
 	{
 		try
 		{
-			m_gameMode->PutSymbol(SymbolType::X);
+			Position chosenPosition = SelectPosition(); 
+			m_gameMode->PutSymbol(chosenPosition);
 		}
 		catch (std::exception e)
 		{
 			std::cout << e.what() << std::endl;
 		}
 	}
-	if (!m_gameMode->IsGameOver());
-	{
-		try
-		{
-			m_gameMode->PutSymbol(SymbolType::O);
-			m_gameMode->GetBoard().Display();
-		}
-		catch (std::exception e)
-		{
-			std::cout << e.what() << std::endl;
-		}
-	}
-	RefreshBoard();
 }
 
 QtFrameworkUI::~QtFrameworkUI()
@@ -126,25 +136,9 @@ void QtFrameworkUI::OnDraw()
 	exit(0);
 }
 
-Position QtFrameworkUI::OnMove()
+void QtFrameworkUI::OnMove()
 {
-	Position position;
-	try
-	{
-		QPushButton* button = qobject_cast<QPushButton*>(sender());
-		button->setText(QString(SymbolToChar(m_gameMode->GetPlayer()->GetSymbol())));
-		(m_gameMode->GetPlayer()->GetSymbol() == SymbolType::X) ? 
-			button->setStyleSheet("color: #FF0000;"): 
-			button->setStyleSheet("color: #0000FF;");
-		button->setEnabled(false);
-
-		position = std::make_pair(gridLayout->indexOf(button) / 3, gridLayout->indexOf(button) % 3);
-	}
-	catch (std::exception e)
-	{
-		std::cout << e.what() << std::endl;
-	}
-	return position;
+	RefreshBoard();
 }
 
 std::string QtFrameworkUI::SymbolToString(const SymbolType& symbol)

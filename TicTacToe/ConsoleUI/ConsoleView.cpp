@@ -24,16 +24,18 @@ void ConsoleView::SetConsoleStrategy() {
 	}
 }
 
+
+
 void ConsoleView::Execute()
 {
 	SetConsoleStrategy();
+	DisplayBoard(m_gameMode->GetBoard());
 	do
 	{
-		DisplayBoard(m_gameMode->GetBoard());
-
 		try 
 		{
-			m_gameMode->PutSymbol(SymbolType::X);
+			Position chosenPosition = AskForPosition();
+			m_gameMode->PutSymbol(chosenPosition);
 		}
 		catch (std::exception e)
 		{
@@ -55,6 +57,20 @@ void ConsoleView::DisplayBoard(const Board& board)
 	std::cout << std::endl;
 }
 
+Position ConsoleView::AskForPosition()
+{
+	Position position;
+	std::cout << "<<<<<< Player " << SymbolToChar(m_gameMode->GetPlayer()->GetSymbol()) << std::endl;
+	std::cout << "Enter the row you want to place your symbol ";
+	std::cin >> position.first;
+
+	std::cout << "Enter the column you want to place your symbol ";
+	std::cin >> position.second;
+	std::cout << std::endl;
+
+	return position;
+}
+
 void ConsoleView::OnWin()
 {
 	DisplayBoard(m_gameMode->GetBoard());
@@ -69,18 +85,9 @@ void ConsoleView::OnDraw()
 	exit(0);
 }
 
-Position ConsoleView::OnMove()
+void ConsoleView::OnMove()
 {
-	Position position;
-	std::cout << "<<<<<< Player " << SymbolToChar(m_gameMode->GetPlayer()->GetSymbol()) << std::endl;
-	std::cout << "Enter the row you want to place your symbol ";
-	std::cin >> position.first;
-
-	std::cout << "Enter the column you want to place your symbol ";
-	std::cin >> position.second;
-	std::cout << std::endl;
-
-	return position;
+	DisplayBoard(m_gameMode->GetBoard());
 }
 
 char ConsoleView::SymbolToChar(const SymbolType& symbol)

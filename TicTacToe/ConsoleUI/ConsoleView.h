@@ -11,10 +11,11 @@ public:
 	void Execute();
 	void DisplayWin(IPlayer* player);
 	void DisplayBoard(const Board& board);
+	Position AskForPosition();
 
 	void OnWin() override;
 	void OnDraw() override;
-	Position OnMove() override;
+	void OnMove() override;
 
 private:
 	IPlayGamePtr m_gameMode;

@@ -61,7 +61,7 @@ bool PlayGame::IsGameOver() const
 	return false;
 }
 
-void PlayGame::PutSymbol(SymbolType symbol)
+void PlayGame::PutSymbol(Position position)
 {
 	Position playerChosenPosition;
 	if (m_strategy != 0 && m_player->GetSymbol() == SymbolType::O) 
@@ -71,16 +71,18 @@ void PlayGame::PutSymbol(SymbolType symbol)
 
 	else 
 	{
-		for (const auto& listener : m_listeners)
-		{
-			playerChosenPosition = listener->OnMove();
-		}
+		playerChosenPosition = position;
 		if (!IsEmptyPosition(playerChosenPosition))
 			throw std::exception("The selected position is not valid, please enter another one.");
 	}
 
 	int positionInArray = playerChosenPosition.first * Board::NO_OF_COLS + playerChosenPosition.second;
 	m_board.EmplaceSymbol(positionInArray, m_player->GetSymbol());
+
+	for (const auto& listener : m_listeners)
+	{
+		listener->OnMove();
+	}
 
 	if (!IsWin())
 	{

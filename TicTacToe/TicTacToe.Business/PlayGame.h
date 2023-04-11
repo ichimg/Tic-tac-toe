@@ -15,7 +15,7 @@ public:
 	bool virtual IsEmptyPosition(const Position& position) const override;
 	bool virtual IsWin() const override;
 	bool virtual IsGameOver() const;
-	virtual void PutSymbol(SymbolType symbol);
+	virtual void PutSymbol(Position position);
 	virtual Board GetBoard() const;
 	virtual IPlayer* GetPlayer() override;
 

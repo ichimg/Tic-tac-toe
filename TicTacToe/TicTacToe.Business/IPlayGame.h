@@ -59,7 +59,7 @@ public:
 	/// </summary>
 	/// <param name="board">Board Class that stores current board.</param>
 	/// <param name="position">Position of where you want to put symbol.</param>
-	virtual void PutSymbol(SymbolType symbol) = 0;
+	virtual void PutSymbol(Position position) = 0;
 
 
 	virtual IPlayer* GetPlayer() = 0;

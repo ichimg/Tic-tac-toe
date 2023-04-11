@@ -19,7 +19,7 @@ public:
 	/// <summary>
 	///		Take action on making a move.
 	/// </summary>
-	virtual Position OnMove() = 0;
+	virtual void OnMove() = 0;
 };
 
 

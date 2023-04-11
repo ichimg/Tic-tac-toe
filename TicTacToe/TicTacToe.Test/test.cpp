@@ -12,6 +12,14 @@ public:
 	MOCK_METHOD(void, ChangeSymbol, (), (override));
 	MOCK_METHOD(void, SetSymbol, (const SymbolType& symbol), (override));
 };
+
+class MockStrategy : public IStrategy
+{
+public:
+	MOCK_METHOD(Position, GenerateMove, (Board board), (override));
+	MOCK_METHOD(EStrategyType, GetStrategyType, (), (override));
+};
+
 TEST(BoardTest, HavingBoardEmpty_WhenIsFull_ThenReturnFalse) 
 {
 	Board board;

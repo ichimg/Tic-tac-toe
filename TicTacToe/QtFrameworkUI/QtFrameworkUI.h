@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QtWidgets>
 #include "ui_QtFrameworkUI.h"
 #include <IPlayGame.h>
@@ -16,11 +15,12 @@ public:
 	void DisplayMenu(QMainWindow* mainWindow);
 	void InitBoard();
 	void RefreshBoard();
+	Position SelectPosition();
     ~QtFrameworkUI();
 
 	virtual void OnWin() override;
 	virtual void OnDraw() override;
-	virtual Position OnMove() override;
+	virtual void OnMove() override;
 
 	std::string SymbolToString(const SymbolType& symbol);
 
@@ -34,6 +34,5 @@ private:
 
 private:
 	IPlayGamePtr m_gameMode;
-	SymbolType m_symbol;
 };
 
