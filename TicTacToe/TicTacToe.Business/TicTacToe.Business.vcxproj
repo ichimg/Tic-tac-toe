@@ -150,6 +150,7 @@
     <ClInclude Include="AIEasy.h" />
     <ClInclude Include="AIHard.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="ERound.h" />
     <ClInclude Include="IGameListener.h" />
     <ClInclude Include="IPlayer.h" />
     <ClInclude Include="IPlayGame.h" />

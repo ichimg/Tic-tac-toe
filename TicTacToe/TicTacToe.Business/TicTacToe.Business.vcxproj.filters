@@ -45,6 +45,9 @@
     <ClInclude Include="AIHard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ERound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp">

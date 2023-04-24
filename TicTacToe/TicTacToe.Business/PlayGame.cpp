@@ -1,5 +1,7 @@
 #include "PlayGame.h"
 #include "Player.h"
+#include "AIEasy.h"
+#include "AIHard.h"
 
 IPlayGamePtr IPlayGame::Produce(EGameType type, SymbolType symbol)
 {
@@ -12,6 +14,7 @@ IPlayGamePtr IPlayGame::Produce(EGameType type, SymbolType symbol)
 PlayGame::PlayGame(SymbolType symbol)
 {
 	m_player = new Player(symbol);
+	m_round = ERound::PlayerRound;
 }
 
 void PlayGame::SetStrategy(EStrategyType type)
@@ -64,9 +67,10 @@ bool PlayGame::IsGameOver() const
 void PlayGame::PutSymbol(Position position)
 {
 	Position playerChosenPosition;
-	if (m_strategy != 0 && m_player->GetSymbol() == SymbolType::O) 
+	if (m_strategy != nullptr && m_round == ERound::StrategyRound) 
 	{
 		playerChosenPosition = m_strategy->GenerateMove(m_board);
+		m_round = ERound::PlayerRound;
 	}
 
 	else 
@@ -74,6 +78,11 @@ void PlayGame::PutSymbol(Position position)
 		playerChosenPosition = position;
 		if (!IsEmptyPosition(playerChosenPosition))
 			throw std::exception("The selected position is not valid, please enter another one.");
+		
+		if (m_strategy != nullptr)
+		{
+			m_round = ERound::StrategyRound;
+		}
 	}
 
 	int positionInArray = playerChosenPosition.first * Board::NO_OF_COLS + playerChosenPosition.second;
@@ -113,6 +122,11 @@ Board PlayGame::GetBoard() const
 IPlayer* PlayGame::GetPlayer()
 {
 	return m_player;
+}
+
+ERound PlayGame::GetRound() const
+{
+	return m_round;
 }
 
 void PlayGame::AddListener(IGameListener* listener)

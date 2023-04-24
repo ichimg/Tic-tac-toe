@@ -2,8 +2,6 @@
 #include "IPlayGame.h"
 #include "IGameListener.h"
 #include "IStrategy.h"
-#include "AIEasy.h"
-#include "AIHard.h"
 #include <vector>
 
 class PlayGame : public IPlayGame
@@ -18,6 +16,7 @@ public:
 	virtual void PutSymbol(Position position);
 	virtual Board GetBoard() const;
 	virtual IPlayer* GetPlayer() override;
+	virtual ERound GetRound() const override;
 
 	virtual void AddListener(IGameListener* listener) override;
 	virtual void RemoveListener(IGameListener* listener) override;
@@ -29,5 +28,6 @@ private:
 	IPlayer* m_player;
 	std::vector<IGameListener*> m_listeners;
 	IStrategyPtr m_strategy;
+	ERound m_round;
 };
 

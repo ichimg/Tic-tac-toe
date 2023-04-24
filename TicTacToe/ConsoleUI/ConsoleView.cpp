@@ -34,8 +34,15 @@ void ConsoleView::Execute()
 	{
 		try 
 		{
-			Position chosenPosition = AskForPosition();
-			m_gameMode->PutSymbol(chosenPosition);
+			if (m_gameMode->GetRound() == ERound::PlayerRound)
+			{
+				Position chosenPosition = AskForPosition();
+				m_gameMode->PutSymbol(chosenPosition);
+			}
+			else
+			{
+				m_gameMode->PutSymbol(std::make_pair<int, int>(-1, -1));
+			}
 		}
 		catch (std::exception e)
 		{

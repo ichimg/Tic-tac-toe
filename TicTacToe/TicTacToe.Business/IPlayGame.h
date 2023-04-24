@@ -2,8 +2,7 @@
 #include "IPlayer.h"
 #include "IGameListener.h"
 #include "IStrategy.h"
-#include "AIEasy.h"
-#include "AIHard.h"
+#include "ERound.h"
 #include <memory>
 
 enum class EGameType
@@ -61,7 +60,10 @@ public:
 	/// <param name="position">Position of where you want to put symbol.</param>
 	virtual void PutSymbol(Position position) = 0;
 
-
+	/// <summary>
+	///		Returns Player.
+	/// </summary>
+	/// <returns></returns>
 	virtual IPlayer* GetPlayer() = 0;
 
 	/// <summary>
@@ -75,6 +77,12 @@ public:
 	/// </summary>
 	/// <param name="listener">IGameListener* that represents a listener. </param>
 	virtual void RemoveListener(IGameListener* listener) = 0;
+
+	/// <summary>
+	///		Returns Current Round.
+	/// </summary>
+	/// <returns></returns>
+	virtual ERound GetRound() const = 0;
 
 	virtual ~IPlayGame() = default;
 };

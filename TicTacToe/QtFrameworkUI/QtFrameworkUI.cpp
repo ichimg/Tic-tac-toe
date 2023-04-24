@@ -109,14 +109,23 @@ void QtFrameworkUI::Execute()
 	{
 		try
 		{
-			Position chosenPosition = SelectPosition(); 
-			m_gameMode->PutSymbol(chosenPosition);
+			if (m_gameMode->GetRound() == ERound::PlayerRound)
+			{
+				Position chosenPosition = SelectPosition();
+				m_gameMode->PutSymbol(chosenPosition);
+			}
+			else
+			{
+				m_gameMode->PutSymbol(std::make_pair<int, int>(-1, -1));
+			}
 		}
 		catch (std::exception e)
 		{
 			std::cout << e.what() << std::endl;
 		}
 	}
+
+	
 }
 
 QtFrameworkUI::~QtFrameworkUI()
