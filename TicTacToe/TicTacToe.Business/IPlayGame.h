@@ -1,6 +1,8 @@
 #pragma once
 #include "IPlayer.h"
 #include "IGameListener.h"
+#include "IStrategy.h"
+#include "ERound.h"
 #include <memory>
 
 enum class EGameType
@@ -9,6 +11,7 @@ enum class EGameType
 };
 
 using IPlayGamePtr = std::shared_ptr<class IPlayGame>;
+using IStrategyPtr = std::shared_ptr<class IStrategy>;
 using Position = std::pair<int, int>;
 class IPlayGame
 {
@@ -19,7 +22,11 @@ public:
 	/// <param name="type">Type of game.</param>
 	/// <param name="player"></param>
 	/// <returns></returns>
-	static IPlayGamePtr Produce(EGameType type, IPlayer* player);
+	static IPlayGamePtr Produce(EGameType type, SymbolType symbol);
+
+	virtual void SetStrategy(EStrategyType type) = 0;
+
+	virtual EStrategyType GetStrategyType() const = 0;
 
 	/// <summary>
 	///		Checks if position is empty.
@@ -47,10 +54,17 @@ public:
 	virtual Board GetBoard() const = 0;
 
 	/// <summary>
-	///		Puts symbol on board.
+	///		Places symbol on board at position(x, y).
 	/// </summary>
-	/// <param name="symbol">SymbolType value that stores X or O.</param>
-	virtual void PutSymbol(SymbolType symbol) = 0;
+	/// <param name="board">Board Class that stores current board.</param>
+	/// <param name="position">Position of where you want to put symbol.</param>
+	virtual void PutSymbol(Position position) = 0;
+
+	/// <summary>
+	///		Returns Player.
+	/// </summary>
+	/// <returns></returns>
+	virtual IPlayer* GetPlayer() = 0;
 
 	/// <summary>
 	///		Add a listener.
@@ -63,6 +77,12 @@ public:
 	/// </summary>
 	/// <param name="listener">IGameListener* that represents a listener. </param>
 	virtual void RemoveListener(IGameListener* listener) = 0;
+
+	/// <summary>
+	///		Returns Current Round.
+	/// </summary>
+	/// <returns></returns>
+	virtual ERound GetRound() const = 0;
 
 	virtual ~IPlayGame() = default;
 };

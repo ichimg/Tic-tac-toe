@@ -3,20 +3,46 @@
 
 ConsoleView::ConsoleView()
 {
-	m_player = new LocalConsolePlayer(SymbolType::X);
-	m_gameMode = IPlayGame::Produce(EGameType::type1, m_player); 
+	m_gameMode = IPlayGame::Produce(EGameType::type1, SymbolType::X);
 	m_gameMode->AddListener(this);
 }
 
+void ConsoleView::SetConsoleStrategy() {
+	int input;
+	std::cout << "<<<<<< Game Mode:\n1 - PvP\n2 - Easy AI\n3 - Hard AI\n";
+	std::cout << "Enter desired game mode: ";
+	std::cin >> input;
+	switch (input) {
+		case 1:
+			break;
+		case 2:
+			m_gameMode->SetStrategy(EStrategyType::AIEasy);
+		case 3:
+			m_gameMode->SetStrategy(EStrategyType::AIHard);
+		default:
+			break;
+	}
+}
+
+
+
 void ConsoleView::Execute()
 {
+	SetConsoleStrategy();
+	DisplayBoard(m_gameMode->GetBoard());
 	do
 	{
-		DisplayBoard(m_gameMode->GetBoard());
-
 		try 
 		{
-			m_gameMode->PutSymbol(SymbolType::X);
+			if (m_gameMode->GetRound() == ERound::PlayerRound)
+			{
+				Position chosenPosition = AskForPosition();
+				m_gameMode->PutSymbol(chosenPosition);
+			}
+			else
+			{
+				m_gameMode->PutSymbol(std::make_pair<int, int>(-1, -1));
+			}
 		}
 		catch (std::exception e)
 		{
@@ -38,10 +64,24 @@ void ConsoleView::DisplayBoard(const Board& board)
 	std::cout << std::endl;
 }
 
+Position ConsoleView::AskForPosition()
+{
+	Position position;
+	std::cout << "<<<<<< Player " << SymbolToChar(m_gameMode->GetPlayer()->GetSymbol()) << std::endl;
+	std::cout << "Enter the row you want to place your symbol ";
+	std::cin >> position.first;
+
+	std::cout << "Enter the column you want to place your symbol ";
+	std::cin >> position.second;
+	std::cout << std::endl;
+
+	return position;
+}
+
 void ConsoleView::OnWin()
 {
 	DisplayBoard(m_gameMode->GetBoard());
-	DisplayWin(m_player);
+	DisplayWin(m_gameMode->GetPlayer());
 	exit(0);
 }
 
@@ -50,6 +90,11 @@ void ConsoleView::OnDraw()
 	DisplayBoard(m_gameMode->GetBoard());
 	std::cout << "WOW, it's a DRAW!" << std::endl;
 	exit(0);
+}
+
+void ConsoleView::OnMove()
+{
+	DisplayBoard(m_gameMode->GetBoard());
 }
 
 char ConsoleView::SymbolToChar(const SymbolType& symbol)
